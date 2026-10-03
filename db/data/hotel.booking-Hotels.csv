@@ -1,1 +1,4 @@
-ID,name,city,address,stars,isActive,createdAt,createdBy,modifiedAt,modifiedBy
+ID;name;city;address;stars;isActive
+d3d4b68e-2824-49c6-8f35-961f630018a1;Registan Plaza;Samarkand;Shohdaroh Street 1;5;true
+a8241477-70e6-4d1e-879f-07e37604b395;Hilton Tashkent;Tashkent;Islam Karimov Street 2;5;true
+c1234567-89ab-cdef-0123-456789abcdef;Bukhara Boutique;Bukhara;Eski Shahar 14;4;true

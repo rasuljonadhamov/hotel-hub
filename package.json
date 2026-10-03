@@ -1,0 +1,54 @@
+{
+  "name": "hotel-hub",
+  "version": "1.0.0",
+  "description": "Hotel Hub CAP project",
+  "private": true,
+  "dependencies": {
+    "@cap-js/sqlite": "^2.0.0",
+    "@sap/cds": "^9.8.0",
+    "express": "^4.19.2",
+    "hdb": "^0.3.0",
+    "passport": "^0.7.0"
+  },
+  "scripts": {
+    "cds": "cds",
+    "build": "cds build",
+    "deploy": "cds deploy",
+    "start": "cds run",
+    "watch": "cds watch",
+    "watch-bookings": "cds watch --open hotel.booking.bookings/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "cds": {
+    "sql": {
+      "dialect": "sqlite"
+    },
+    "migrations": {
+      "db": "sql"
+    },
+    "features": {
+      "rest_query": true,
+      "audit": true
+    },
+    "services": {
+      "Binding": {
+        "kind": "sql",
+        "model": "hotel.booking",
+        "credentials": {
+          "database": "hotel-hub"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "devDependencies": {
+    "cds-plugin-ui5": "^0.17.0"
+  },
+  "sapux": [
+    "app/bookings"
+  ]
+}
