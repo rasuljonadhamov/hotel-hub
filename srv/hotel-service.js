@@ -31,12 +31,13 @@ module.exports = class HotelService extends cds.ApplicationService {
     const { Hotels, Rooms, Customers, Bookings } = this.entities;
 
     this.before("NEW", Bookings.drafts, (req) => {
+      // only fill what the client did not send (Postman can send its own dates)
       const d = new Date();
       d.setDate(d.getDate() + 1);
-      req.data.checkIn = d.toISOString().slice(0, 10);
+      req.data.checkIn ??= d.toISOString().slice(0, 10);
       d.setDate(d.getDate() + 2);
-      req.data.checkOut = d.toISOString().slice(0, 10);
-      req.data.guests = 1;
+      req.data.checkOut ??= d.toISOString().slice(0, 10);
+      req.data.guests ??= 1;
     });
 
     this.before("CREATE", Bookings, async (req) => {

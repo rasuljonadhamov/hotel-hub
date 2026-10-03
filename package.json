@@ -6,9 +6,7 @@
   "dependencies": {
     "@cap-js/sqlite": "^2.0.0",
     "@sap/cds": "^9.8.0",
-    "express": "^4.19.2",
-    "hdb": "^0.3.0",
-    "passport": "^0.7.0"
+    "express": "^4.19.2"
   },
   "scripts": {
     "cds": "cds",
@@ -16,9 +14,8 @@
     "deploy": "cds deploy",
     "start": "cds run",
     "watch": "cds watch",
-    "watch-bookings": "cds watch --open hotel.booking.bookings/index.html?sap-ui-xx-viewCache=false --livereload false",
     "watch-hotel-booking": "cds watch --open hotelbooking/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "test": "node --test",
+    "test": "CDS_PLUGIN_UI5_ACTIVE=false node --test --test-force-exit test/HotelService.test.js",
     "watch-hotels": "cds watch --open hotel.booking.hotels/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
@@ -65,7 +62,6 @@
     "@cap-js/cds-test": "^1"
   },
   "sapux": [
-    "app/bookings",
     "app/hotel-booking",
     "app/hotels"
   ]

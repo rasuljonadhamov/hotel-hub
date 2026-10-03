@@ -1,37 +1,94 @@
 @host = http://localhost:4004/odata/v4/hotel
-### 1. Mehmonxonalar + xonalar ($expand = association)
+
+### 1. Mehmonxonalar + xonalar
 GET {{host}}/Hotels?$expand=rooms
 Authorization: Basic ali:ali
+
 ### 2. Filtr + saralash
-GET {{host}}/Rooms?$filter=pricePerNight lt 100&$orderby=pricePerNight desc
+GET {{host}}/Rooms?$filter=pricePerNight lt 200&$orderby=pricePerNight desc
 Authorization: Basic ali:ali
+
 ### 3. Tashqi API funksiyasi
 GET {{host}}/getExchangeRate(currency='UZS')
 Authorization: Basic ali:ali
-### 4. Oddiy CRUD (draft yo'q): Customers
+
+### 4. $metadata 
+GET {{host}}/$metadata
+Authorization: Basic ali:ali
+
+### 5.Customers
 POST {{host}}/Customers
 Authorization: Basic admin:admin
 Content-Type: application/json
+
 { "firstName": "Olim", "lastName": "Saidov", "email": "olim@mail.uz", "userId": "olim" }
-### 5. Bron: 1-qadam - draft yaratish
+
+### 6. Bron: draft
+# @name draft
 POST {{host}}/Bookings
 Authorization: Basic ali:ali
 Content-Type: application/json
-{ "room_ID": "aaaaaaa1-0000-0000-0000-000000000002",
-"customer_ID": "cccccccc-0000-0000-0000-000000000001",
-"checkIn": "2026-12-10", "checkOut": "2026-12-18", "guests": 2 }
 
-### 6. Bron: 2-qadam - aktivlashtirish (validatsiya shu yerda)
-POST {{host}}/Bookings(ID=<ID>,IsActiveEntity=false)/HotelService.draftActivate
+{ "room_ID": "e3234567-89ab-cdef-0123-456789abcdef",
+  "customer_ID": "c1d4b68e-2824-49c6-8f35-961f630018a1",
+  "checkIn": "2026-12-10", "checkOut": "2026-12-18", "guests": 2 }
+
+### 7. Bron: 2-qadam - aktivlashtirish
+POST {{host}}/Bookings(ID={{draft.response.body.ID}},IsActiveEntity=false)/HotelService.draftActivate
 Authorization: Basic ali:ali
 Content-Type: application/json
-{}
-### 7. Tasdiqlash (Manager)
-POST {{host}}/Bookings(ID=<ID>,IsActiveEntity=true)/HotelService.confirmBooking
-Authorization: Basic manager:manager
-Content-Type: application/json
+
 {}
 
-### 8. Ruxsat testi: Manager o'chira olmaydi -> 403
-DELETE {{host}}/Bookings(ID=<ID>,IsActiveEntity=true)
+### 8. Tasdiqlash (Manager)
+POST {{host}}/Bookings(ID={{draft.response.body.ID}},IsActiveEntity=true)/HotelService.confirmBooking
 Authorization: Basic manager:manager
+Content-Type: application/json
+
+{}
+
+### 9. Ruxsat testi: Manager o'chira olmaydi 
+DELETE {{host}}/Bookings(ID={{draft.response.body.ID}},IsActiveEntity=true)
+Authorization: Basic manager:manager
+
+### 10. Xuddi shu xona va sanalarga
+# @name draft2
+POST {{host}}/Bookings
+Authorization: Basic ali:ali
+Content-Type: application/json
+
+{ "room_ID": "e3234567-89ab-cdef-0123-456789abcdef",
+  "customer_ID": "c1d4b68e-2824-49c6-8f35-961f630018a1",
+  "checkIn": "2026-12-12", "checkOut": "2026-12-14", "guests": 1 }
+
+### 11. Aktivlashtirish -> 409 
+POST {{host}}/Bookings(ID={{draft2.response.body.ID}},IsActiveEntity=false)/HotelService.draftActivate
+Authorization: Basic ali:ali
+Content-Type: application/json
+
+{}
+
+### 12. Ali book with vali
+# @name draft3
+POST {{host}}/Bookings
+Authorization: Basic ali:ali
+Content-Type: application/json
+
+{ "room_ID": "e2241477-70e6-4d1e-879f-07e37604b395",
+  "customer_ID": "c2241477-70e6-4d1e-879f-07e37604b395",
+  "checkIn": "2026-12-20", "checkOut": "2026-12-22", "guests": 1 }
+
+### 13. Aktivlashtirish -> 403
+POST {{host}}/Bookings(ID={{draft3.response.body.ID}},IsActiveEntity=false)/HotelService.draftActivate
+Authorization: Basic ali:ali
+Content-Type: application/json
+
+{}
+
+### 14. Vali books
+GET {{host}}/Bookings
+Authorization: Basic vali:vali
+
+### 15. Admin  -> 409
+DELETE {{host}}/Hotels(ID=a8241477-70e6-4d1e-879f-07e37604b395,IsActiveEntity=true)
+Authorization: Basic admin:admin

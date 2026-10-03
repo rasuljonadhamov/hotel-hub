@@ -1,4 +1,4 @@
 ID;firstName;lastName;email;phone;isVip;userId
-c1d4b68e-2824-49c6-8f35-961f630018a1;Alijon;Valiyev;alijon@example.com;+998991234567;false;alijon
-c2241477-70e6-4d1e-879f-07e37604b395;Sardor;Rustamov;sardor@example.com;+998997654321;true;sardor
+c1d4b68e-2824-49c6-8f35-961f630018a1;Ali;Valiyev;ali@example.com;+998991234567;false;ali
+c2241477-70e6-4d1e-879f-07e37604b395;Vali;Rustamov;vali@example.com;+998997654321;true;vali
 c3234567-89ab-cdef-0123-456789abcdef;Nodira;Karimova;nodira@example.com;+998934567890;false;nodira

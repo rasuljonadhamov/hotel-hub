@@ -1,6 +1,6 @@
 using { hotel.booking as db } from '../db/schema';
 
-service HotelService {
+service HotelService @(requires: 'authenticated-user') {
 
     //hotels
     @odata.draft.enabled
