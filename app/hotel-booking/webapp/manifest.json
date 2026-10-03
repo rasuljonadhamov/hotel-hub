@@ -1,67 +1,45 @@
 {
-  "_version": "1.89.0",
+  "_version": "1.65.0",
   "sap.app": {
-    "id": "hotel.booking.bookings",
+    "id": "hotelhub.bookings",
     "type": "application",
     "i18n": "i18n/i18n.properties",
-    "applicationVersion": {
-      "version": "0.0.1"
-    },
+    "applicationVersion": { "version": "0.0.1" },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
-    "resources": "resources.json",
-    "sourceTemplate": {
-      "id": "@sap/generator-fiori:lrop",
-      "version": "1.33.0",
-      "toolsId": "d4949d8e-e0e8-4562-9442-8c966fa9fb8c"
-    },
     "dataSources": {
       "mainService": {
         "uri": "/odata/v4/hotel/",
         "type": "OData",
-        "settings": {
-          "annotations": [],
-          "odataVersion": "4.0"
+        "settings": { "annotations": [], "odataVersion": "4.0" }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Bookings-display": {
+          "semanticObject": "Bookings",
+          "action": "display",
+          "title": "{{appTitle}}",
+          "signature": { "parameters": {}, "additionalParameters": "allowed" }
         }
       }
     }
   },
   "sap.ui": {
     "technology": "UI5",
-    "icons": {
-      "icon": "",
-      "favIcon": "",
-      "phone": "",
-      "phone@2": "",
-      "tablet": "",
-      "tablet@2": ""
-    },
-    "deviceTypes": {
-      "desktop": true,
-      "tablet": true,
-      "phone": true
-    }
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
   },
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.153.0",
-      "libs": {
-        "sap.m": {},
-        "sap.ui.core": {},
-        "sap.fe.templates": {}
-      }
+      "minUI5Version": "1.120.0",
+      "libs": { "sap.m": {}, "sap.ui.core": {}, "sap.fe.templates": {} }
     },
-    "contentDensities": {
-      "compact": true,
-      "cozy": true
-    },
+    "contentDensities": { "compact": true, "cozy": true },
     "models": {
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
-        "settings": {
-          "bundleName": "hotel.booking.bookings.i18n.i18n"
-        }
+        "settings": { "bundleName": "hotelhub.bookings.i18n.i18n" }
       },
       "": {
         "dataSource": "mainService",
@@ -71,14 +49,7 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-      },
-      "@i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "uri": "i18n/i18n.properties"
       }
-    },
-    "resources": {
-      "css": []
     },
     "routing": {
       "config": {},
@@ -103,17 +74,15 @@
             "settings": {
               "contextPath": "/Bookings",
               "variantManagement": "Page",
+              "initialLoad": "Enabled",
               "navigation": {
-                "Bookings": {
-                  "detail": {
-                    "route": "BookingsObjectPage"
-                  }
-                }
+                "Bookings": { "detail": { "route": "BookingsObjectPage" } }
               },
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable"
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single"
                   }
                 }
               }
@@ -126,21 +95,13 @@
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Bookings"
+              "contextPath": "/Bookings",
+              "editableHeaderContent": false
             }
           }
         }
       }
     }
   },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
-  },
-  "sap.fe": {
-    "app": {
-      "enableLazyLoading": true
-    }
-  }
+  "sap.fiori": { "registrationIds": [], "archeType": "transactional" }
 }

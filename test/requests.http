@@ -1,0 +1,37 @@
+@host = http://localhost:4004/odata/v4/hotel
+### 1. Mehmonxonalar + xonalar ($expand = association)
+GET {{host}}/Hotels?$expand=rooms
+Authorization: Basic ali:ali
+### 2. Filtr + saralash
+GET {{host}}/Rooms?$filter=pricePerNight lt 100&$orderby=pricePerNight desc
+Authorization: Basic ali:ali
+### 3. Tashqi API funksiyasi
+GET {{host}}/getExchangeRate(currency='UZS')
+Authorization: Basic ali:ali
+### 4. Oddiy CRUD (draft yo'q): Customers
+POST {{host}}/Customers
+Authorization: Basic admin:admin
+Content-Type: application/json
+{ "firstName": "Olim", "lastName": "Saidov", "email": "olim@mail.uz", "userId": "olim" }
+### 5. Bron: 1-qadam - draft yaratish
+POST {{host}}/Bookings
+Authorization: Basic ali:ali
+Content-Type: application/json
+{ "room_ID": "aaaaaaa1-0000-0000-0000-000000000002",
+"customer_ID": "cccccccc-0000-0000-0000-000000000001",
+"checkIn": "2026-12-10", "checkOut": "2026-12-18", "guests": 2 }
+
+### 6. Bron: 2-qadam - aktivlashtirish (validatsiya shu yerda)
+POST {{host}}/Bookings(ID=<ID>,IsActiveEntity=false)/HotelService.draftActivate
+Authorization: Basic ali:ali
+Content-Type: application/json
+{}
+### 7. Tasdiqlash (Manager)
+POST {{host}}/Bookings(ID=<ID>,IsActiveEntity=true)/HotelService.confirmBooking
+Authorization: Basic manager:manager
+Content-Type: application/json
+{}
+
+### 8. Ruxsat testi: Manager o'chira olmaydi -> 403
+DELETE {{host}}/Bookings(ID=<ID>,IsActiveEntity=true)
+Authorization: Basic manager:manager

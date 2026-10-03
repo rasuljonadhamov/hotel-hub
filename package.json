@@ -16,25 +16,40 @@
     "deploy": "cds deploy",
     "start": "cds run",
     "watch": "cds watch",
-    "watch-bookings": "cds watch --open hotel.booking.bookings/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-bookings": "cds watch --open hotel.booking.bookings/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-hotel-booking": "cds watch --open hotelbooking/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "test": "node --test",
+    "watch-hotels": "cds watch --open hotel.booking.hotels/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
-    "sql": {
-      "dialect": "sqlite"
-    },
-    "migrations": {
-      "db": "sql"
-    },
-    "features": {
-      "rest_query": true,
-      "audit": true
-    },
-    "services": {
-      "Binding": {
-        "kind": "sql",
-        "model": "hotel.booking",
-        "credentials": {
-          "database": "hotel-hub"
+    "requires": {
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "admin": {
+            "password": "admin",
+            "roles": [
+              "Admin"
+            ]
+          },
+          "manager": {
+            "password": "manager",
+            "roles": [
+              "Manager"
+            ]
+          },
+          "ali": {
+            "password": "ali",
+            "roles": [
+              "Customer"
+            ]
+          },
+          "vali": {
+            "password": "vali",
+            "roles": [
+              "Customer"
+            ]
+          }
         }
       }
     }
@@ -46,9 +61,12 @@
     "app/*"
   ],
   "devDependencies": {
-    "cds-plugin-ui5": "^0.17.0"
+    "cds-plugin-ui5": "^0.17.0",
+    "@cap-js/cds-test": "^1"
   },
   "sapux": [
-    "app/bookings"
+    "app/bookings",
+    "app/hotel-booking",
+    "app/hotels"
   ]
 }

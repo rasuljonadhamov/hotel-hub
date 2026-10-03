@@ -1,14 +1,14 @@
 {
   "generationParameters": {
-    "generationDate": "Sat Oct 03 2026 14:26:52 GMT+0500 (Uzbekistan Standard Time)",
+    "generationDate": "Sat Oct 03 2026 20:39:02 GMT+0500 (Uzbekistan Standard Time)",
     "generatorPlatform": "Visual Studio Code",
     "serviceType": "Local CAP",
     "metadataFilename": "",
     "serviceUrl": "http://localhost:4004/odata/v4/hotel/",
-    "appName": "bookings",
-    "appTitle": "Bookings",
+    "appName": "hotel-booking",
+    "appTitle": "HotelService",
     "appDescription": "An SAP Fiori application.",
-    "appNamespace": "hotel.booking",
+    "appNamespace": "",
     "ui5Theme": "sap_horizon",
     "ui5Version": "1.153.0",
     "enableEslint": true,
@@ -23,6 +23,6 @@
         "value": "Bookings"
       }
     ],
-    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/bookings/webapp/index.html"
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/hotelbooking/index.html"
   }
 }
